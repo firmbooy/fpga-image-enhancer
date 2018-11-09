@@ -8,4 +8,5 @@ laplacian_gradient = uint8(filter2(laplacian_mask, image, 'same'));
 
 sharpened_image = imsubtract(image, laplacian_gradient);
 
-imshowpair(image, sharpened_image, 'montage')
+%imshowpair(image, sharpened_image, 'montage')
+imshow(sharpened_image)
