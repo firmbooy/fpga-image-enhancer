@@ -1,18 +1,16 @@
 clc;
 clear;
-
-w_hp = [-1 -1 -1; -1 -8 -1;-1 -1 -1];
-% w_hp = [0 -1 0; -1 -4 -1; 0 -1 0];
-
-c = 2;
-w_ap = eye(3, 3);
-
-w_hb = w_ap + c * w_hp;
-
 image = imread('moon.jpg');
+c = 2;
 
-hbf_output = uint8(filter2(w_hp, image, 'same'));
+% For Unsharp masking : set c = 1
+% For High-boost filtering : set c > 1
 
-hbf_sharpened_image = imsubtract(image, hbf_output);
+% averaging_mask = 1/9 * ones(3,3);
+% 5x5 Gaussian averaging filter :
+averaging_mask = 1/273 * [1,4,7,4,1;4,16,26,16,4;7,26,41,26,7;4,16,26,16,4;1,4,7,4,1];
+averaged_image = uint8(filter2(averaging_mask,image, 'same'));
 
-imshowpair(image, hbf_sharpened_image, 'montage')
+high_boost_mask = imsubtract(image, averaged_image);
+final_image = imadd(image, c*high_boost_mask);
+imshowpair(image, final_image, 'montage')
