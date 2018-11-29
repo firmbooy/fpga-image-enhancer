@@ -10,8 +10,12 @@ laplacian_gradient = uint8(filter2(laplacian_mask, image, 'same'));
 sharpened_image = imsubtract(image, laplacian_gradient); % sharpened image after laplacian filtering
   
 % Sobel operation on image :
-sobel_mask = [-1,-2,-1;0,0,0;1,2,1];
-sobel_gradient = uint8(filter2(laplacian_mask, image, 'same'));
+Gx = [-1,-2,-1;0,0,0;1,2,1];
+Gy = Gx';
+sobel_x = (filter2(Gx, image, 'same'));
+sobel_y = (filter2(Gy, image, 'same'));
+sobel_gradient = sqrt(sobel_x.^2 + sobel_y.^2);
+sobel_gradient = uint8(sobel_gradient);
 sobel_filtered_image = imsubtract(image, sobel_gradient);
 
 % Averaging the sobel filtered image to remove 'salt & pepper' noise
