@@ -1,0 +1,8 @@
+function [pix_out, ctrl_out] = laplacian_new (pix_in,ctrl_in)
+
+persistent laplacianFilter;
+if isempty(laplacianFilter)
+    laplacian_mask = [1 1 1; 1 -8 1; 1 1 1];
+    
+
+end

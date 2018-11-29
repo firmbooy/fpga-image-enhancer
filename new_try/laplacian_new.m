@@ -1,0 +1,13 @@
+function [pix_out, ctrl_out] = laplacian_new (pix_in,ctrl_in)
+
+persistent laplacianFilter;
+if isempty(laplacianFilter)
+    laplacian_mask = [1 1 1; 1 -8 1; 1 1 1];
+    laplacianFilter = visionhdl.ImageFilter(...
+    'Coefficients',laplacian_mask,...
+    'PaddingMethod','Symmetric',...
+    'CoefficientsDataType','Custom',...
+    'CustomCoefficientsDataType',numerictype(1,16,12)); 
+
+end
+[pix_out,ctrl_out] = step(sharpeningFilter,pix_in,ctrl_in);
